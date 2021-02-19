@@ -1,0 +1,55 @@
+.white {
+    color: #232323 !important;
+    background-color: #fff;
+}
+
+.red {
+    color: #bf0000;
+    background-color: #bf0000;
+}
+
+.black {
+    color: #000;
+    background-color: #000;
+}
+
+.yellow {
+    color: #ffb027;
+    background-color: #ffb027;
+}
+
+.color-item {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(23, 23, 23, 0.5);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-item svg {
+    color: transparent;
+}
+
+.team-color {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    max-width: 300px;
+    justify-content: space-around;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.selected-color {
+    background: #9c0092;
+}
+
+.selected-icon {
+    color: white !important;
+    width: 25px;
+    height: 25px;
+    text-shadow: 0 0 3px rgba(23, 23, 23, 0.75);
+}
