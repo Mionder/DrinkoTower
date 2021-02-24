@@ -6,6 +6,8 @@ import Konyak from "../assets/konyak.png";
 import $ from "jquery";
 import Cubic from "./Cubics";
 import PropTypes from "prop-types";
+import Button from "./Component/Button";
+import Image from "./Component/Image";
 
 export default function Field(props) {
     const [status, setStatus] = useState(props.status)
@@ -58,8 +60,8 @@ export default function Field(props) {
                 <div className="field-content">
 
                     {props.name === "пиво" ? (
-                        <img className="field-img" src={Beer} alt="beer"/>
-                    ) : props.name === "водка" ? <img className="field-img" src={Vodka} alt="vodka"/> : (
+                        <Image className="field-img" img={Beer} alt="beer"/>
+                    ) : props.name === "водка" ? <Image className="field-img" img={Vodka} alt="vodka"/> : (
                         <span>{props.name}</span>
                     )
                     }
@@ -70,8 +72,8 @@ export default function Field(props) {
                 <div className="modal-field">
                     <p className="label-modal">Будешь пить {props.name}?</p>
                     <div className="btn-group">
-                        <button onClick={() => drinkRequest(true)} className="btn-cub">Конечно</button>
-                        <button onClick={() => drinkRequest(false)} className="btn-cub">Ноу</button>
+                        <Button onClick={() => drinkRequest(true)} className="btn-cub" text="Конечно" />
+                        <Button onClick={() => drinkRequest(false)} className="btn-cub" text="Ноу" />
                     </div>
                 </div>
             }

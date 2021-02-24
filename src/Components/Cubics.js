@@ -3,6 +3,8 @@ import cubicGif from "../assets/cubics.gif";
 import "./cubes.css";
 import $ from "jquery";
 import PropTypes from "prop-types";
+import Button from "./Component/Button";
+import Image from "./Component/Image";
 
 export default class Cubic extends Component {
     state = {
@@ -53,7 +55,6 @@ export default class Cubic extends Component {
     }
 
     randomInteger(min, max) {
-        // случайное число от min до (max+1)
         let rand = min + Math.random() * (max - min);
         return Math.floor(rand);
     }
@@ -82,10 +83,16 @@ export default class Cubic extends Component {
                                     <div className="menu-cubics">
                                         <p className="go-start">Будешь играть в кубики?</p>
                                         <div className="btn-group">
-                                            <button className="btn-cub"
-                                                    onClick={() => this.setState({isCubicStart: true})}>Конечно
-                                            </button>
-                                            <button className="btn-cub" onClick={() => this.falseGame()}>Нет</button>
+                                            <Button
+                                                className="btn-cub"
+                                                onClick={() => this.setState({isCubicStart: true})}
+                                                text="Конечно"
+                                            />
+                                            <Button
+                                                className="btn-cub"
+                                                onClick={() => this.falseGame()}
+                                                text="Нет"
+                                            />
                                         </div>
                                     </div>
                                 )
@@ -104,9 +111,12 @@ export default class Cubic extends Component {
                                         <p className="go-start">Компьютер загадал число:</p>
                                         <p className="random-value">{cubicValue.full}</p>
                                         <div className="btn-group">
-                                            <button id="throw-cub" className="cubics-btn"
-                                                    onClick={this.generateCubics}>Бросить кубики
-                                            </button>
+                                            <Button
+                                                id="throw-cub"
+                                                className="cubics-btn"
+                                                onClick={this.generateCubics}
+                                                text="Бросить кубики"
+                                            />
                                         </div>
                                         {
                                             !gifPlay ? (
@@ -119,11 +129,10 @@ export default class Cubic extends Component {
                                         }
 
                                         {
-                                            gifPlay && <img src={cubicGif} alt="gif"/>
+                                            gifPlay && <Image img={cubicGif} alt="gif"/>
                                         }
 
                                         {
-
                                             cubicValue.full !== 0 && (
                                                 cubicStatus ? <p className="cub cubic-status-win">Победил</p> :
                                                     <p className="cub cubic-status-lose">Проиграл</p>
@@ -132,12 +141,9 @@ export default class Cubic extends Component {
                                     </div>
                                 )
                             }
-
-
                         </div>
                     )
                 }
-
             </div>
         )
     }
@@ -149,3 +155,9 @@ Cubic.propTypes = {
     teams: PropTypes.array,
     moveTurn: PropTypes.bool,
 };
+
+Cubic.defaultProps = {
+    updateScore: null,
+    cubicStatus: false,
+    teams: [],
+}

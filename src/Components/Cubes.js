@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from "react";
 import "./cubes.css";
 import cubicGif from "../assets/cubics.gif";
+import Button from "./Component/Button";
 export default function Cubes(props){
     const [isCubicStart, setCubicsStart] = useState(false);
     const [status, setStatus] = useState(props.cubicStatus);
@@ -68,8 +69,8 @@ export default function Cubes(props){
                                 <div className="menu-cubics">
                                     <p className="go-start">Будешь играть?</p>
                                     <div className="btn-group">
-                                        <button className="btn-cub" onClick={() => setCubicsStart(true)}>Конечно</button>
-                                        <button className="btn-cub" onClick={() => setStatus(false)}>Нет</button>
+                                        <Button className="btn-cub" onClick={() => setCubicsStart(true)} text="Конечно" />
+                                        <Button className="btn-cub" onClick={() => setStatus(false)} text="Нет" />
                                     </div>
                                 </div>
                             )
@@ -87,7 +88,7 @@ export default function Cubes(props){
                                     <p className="go-start">Компьютер загадал число:</p>
                                     <p className="random-value">{cubicFull}</p>
                                     <div className="btn-group">
-                                        <button className="cubics-btn" onClick={()=>setGifPlay(true)}>Бросить кубики</button>
+                                        <Button className="cubics-btn" onClick={()=>setGifPlay(true)} text="Бросить кубики" />
                                     </div>
                                     {
                                         !gifPlay ? (
@@ -109,7 +110,9 @@ export default function Cubes(props){
                                     {/*<p className='`${cubicStatus} ? 'cub cubic-status-win' : 'cub cubic-status-lose'">{cubicStatus ? "Победил" : "Проиграл"}</p>*/}
                                     {
                                         !gifPlay ?
-                                        cubicStatus ? (<p className="cub cubic-status-win">Победил</p>) : (<p className="cub cubic-status-lose">Проиграл</p>) : ""
+                                            cubicStatus ? (<p className="cub cubic-status-win">Победил</p>)
+                                                : (<p className="cub cubic-status-lose">Проиграл</p>)
+                                            : ""
                                     }
                                 </div>
                             )

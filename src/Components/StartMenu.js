@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import headerLogo from "../assets/DrinkoTower.png";
 import Field from "./Field";
 import ColorTeam from "./ColorTeam";
-import Civilization from "./Civilization";
-import CivilizationField from "./CivilizationField";
+import Header from "./Header";
+import Input from "./Component/Input";
+import Button from "./Component/Button";
 
 export default class StartMenu extends Component {
     state = {
@@ -19,7 +19,7 @@ export default class StartMenu extends Component {
         drinksName: [],
         fields: [],
         currField: true,
-        maxAmountDrinks: 25,
+        maxAmountDrinks: 24,
         isReadyFields: false,
         teams: {
             team1: 0,
@@ -48,7 +48,7 @@ export default class StartMenu extends Component {
             this.state.fieldCivilization.push(
                 {
                     id: Math.random().toString(),
-                    price: 15,
+                    price: 10,
                     name: "Шахта",
                     ownerField: Math.random().toString(),
                 }
@@ -78,7 +78,6 @@ export default class StartMenu extends Component {
                 await this.updateScore(backScore);
                 fieldCivilization[index].ownerField = "team1";
                 this.setState({})
-
             } else if (teams.team1 < priceField) {
                 this.setState({moveTurn: !moveTurn})
             }
@@ -106,7 +105,6 @@ export default class StartMenu extends Component {
             return (
                 <div key={id} onClick={() => this.buyField(index, price)}
                      className={(ownerField === 'team1') ? `civilization-field ${teamsInfo[0].color}` : (ownerField === 'team2') ? `civilization-field ${teamsInfo[1].color}` : `civilization-field`}>
-
                     <p className="price-civa">{price} очков</p>
                     <p className="name-civa">{name}</p>
                 </div>
@@ -132,7 +130,6 @@ export default class StartMenu extends Component {
                 }
             })
         }
-
     }
     deleteInput = async (id) => {
         if (this.state.drinks.length > 1) {
@@ -146,7 +143,7 @@ export default class StartMenu extends Component {
         return arr.map((item, index) => {
             return (
                 <div className="team-info-wrapper">
-                    <input className="input-team-name" type="text"
+                    <Input className="input-team-name" type="text"
                            onChange={(e) => teamsInfo[index].name = e.target.value}
                            placeholder={`Название команды ${index + 1}`}/>
                     <ColorTeam updateColor={this.updateColor} id={index}/>
@@ -164,20 +161,25 @@ export default class StartMenu extends Component {
         return arr.map((item, index) => {
             return (
                 <div key={index} className="item-menu">
-                    <input className="item-menu-input" type="text" onChange={(e) => drinks[index].name = e.target.value}
+                    <Input className="item-menu-input" type="text" onChange={(e) => drinks[index].name = e.target.value}
                            placeholder="Название алкоголя"/>
-                    <input className="item-menu-input input-num" min="0"
+                    <Input className="item-menu-input input-num" min="0"
                            onChange={(e) => drinks[index].amount = +e.target.value} placeholder="Кол-во" type="number"/>
-                    <input className="item-menu-input input-num" min="0"
+                    <Input className="item-menu-input input-num" min="0"
                            onChange={(e) => drinks[index].points = +e.target.value} placeholder="Балы" type="number"/>
-                    <button className="delete-btn" onClick={() => this.deleteInput(item.id)}>
-                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban"
-                             className="svg-inline--fa fa-ban fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 512 512">
-                            <path fill="currentColor"
-                                  d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"></path>
-                        </svg>
-                    </button>
+                    <Button
+                        className="delete-btn"
+                        onClick={() => this.deleteInput(item.id)}
+                        text={
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban"
+                                 className="svg-inline--fa fa-ban fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                      d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"></path>
+                            </svg>
+                        }
+                    />
+
                 </div>
             )
         })
@@ -189,7 +191,6 @@ export default class StartMenu extends Component {
                 drinks: prevState.drinks.concat({amount: 0, name: "", id: Math.random().toString(), points: 0})
             };
         })
-
     }
 
     gameStart = async () => {
@@ -221,8 +222,6 @@ export default class StartMenu extends Component {
             if ((item.amount < 0 || typeof item.amount === "string") || (item.points < 0 || typeof item.points === "string")) {
                 this.setState({validateInfo: "Введите значения > 0"})
             } else {
-
-
                 await this.setState(prev => {
                     return {
                         amountFields: prev.amountFields += item.amount
@@ -279,8 +278,10 @@ export default class StartMenu extends Component {
 
         if ((namesValidate && colorValidate) && (teamsInfo[0].name !== teamsInfo[1].name && teamsInfo[0].color !== teamsInfo[1].color)) {
             this.setState({currentStage: "Drinks", validateInfo: ""});
-        } else {
+        } else if (!namesValidate || !colorValidate) {
             this.setState({validateInfo: "Введите всю информацию"})
+        } else if (teamsInfo[0].name === teamsInfo[1].name || teamsInfo[0].color === teamsInfo[1].color) {
+            this.setState({validateInfo: "Имена команд и цвета не должны совпадать"})
         }
     }
 
@@ -296,32 +297,30 @@ export default class StartMenu extends Component {
 
 
     render() {
-        const {drinks, validateInfo, currentStage, fieldCivilization, moveTurn, teamsInfo, teams,  fields} = this.state;
+        const {drinks, validateInfo, currentStage, fieldCivilization, moveTurn, teamsInfo, teams, fields} = this.state;
         let inputs = this.renderInputs(drinks);
         let teamInputs = this.renderTeamInfo(teamsInfo);
         let civaInputs = this.renderFieldCiva(fieldCivilization);
         return (
             <div className="start-menu">
-                <header className="header" id="header">
-                    <img src={headerLogo} className="logo" alt="logo"/>
-                </header>
+                <Header/>
                 {
                     validateInfo !== "" && <p className="validate-info">{validateInfo}</p>
                 }
                 {currentStage === "Name&Colors" ?
                     <div className="team-info">
                         {teamInputs}
-                        <button className="btn" onClick={() => this.validateTeam()}>Далее</button>
+                        <Button className="btn" onClick={() => this.validateTeam()} text="Далее"/>
                     </div>
                     : currentStage === "Drinks" ?
                         <div>
-                            <input type="number" className="item-menu-input w-100"
+                            <Input type="number" className="item-menu-input w-100"
                                    placeholder="Общее количество напитков"
                                    onChange={(e) => this.setState({maxAmountDrinks: e.target.value})}/>
                             {inputs}
-                            <button onClick={this.addMore} className="btn">Добавить еще</button>
-                            <button onClick={this.gameStart} className="btn">Сгенерировать поле</button>
-                            <button className="btn" onClick={() => this.validateStart()}>Далее</button>
+                            <Button onClick={this.addMore} className="btn" text="Добавить еще"/>
+                            {/*<Button onClick={this.gameStart} className="btn" />Сгенерировать поле*/}
+                            <Button className="btn" onClick={() => this.validateStart()} text="Далее"/>
 
                         </div> : currentStage === "Game" ?
                             <div className="game">
@@ -330,9 +329,8 @@ export default class StartMenu extends Component {
                                 <div className="dashboard">
                                     {this.renderFields(fields)}
                                 </div>
-                                <button className="btn" onClick={() => this.setState({currentStage: "Civa"})}>Закончить
-                                    раунд
-                                </button>
+                                <Button className="btn" onClick={() => this.setState({currentStage: "Civa"})}
+                                        text="Закончить раунд"/>
                             </div> :
                             currentStage === "Civa" ?
                                 <div className="civilization-wrapper">
@@ -341,12 +339,17 @@ export default class StartMenu extends Component {
                                     <div className="civilization">
                                         {civaInputs}
                                     </div>
-                                    <button className="btn"
-                                            onClick={() => this.setState({currentStage: "Drinks"})}>Назад
-                                    </button>
-                                    <button className="btn" onClick={() => window.location.reload()}>Начать заново
-                                    </button>
 
+                                    <Button
+                                        className="btn"
+                                        onClick={() => this.setState({currentStage: "Drinks"})}
+                                        text="Назад"
+                                    />
+
+                                    <Button
+                                        className="btn"
+                                        onClick={() => window.location.reload()} text="Начать заново"
+                                    />
                                 </div> : ""
                 }
             </div>
